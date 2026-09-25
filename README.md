@@ -1,75 +1,68 @@
-# Registro de tiros de golf
+# Registro de swings de golf
 
-Proyecto integral de TC1031 - Avance 1
+Proyecto integral de TC1031
 
 Sebastian Villegas Olaya - A01714719
 
-## Descripción
+## Descripción del proyecto
 
-Cuando voy al range apunto los tiros que hago: la fecha, el palo, la distancia y la
-velocidad de la bola. El programa lee esos tiros de `tiros.csv` y permite verlos
-ordenados por distancia (para ver cuáles fueron mis mejores tiros) o por palo
-(para comparar los tiros que hice con el mismo palo).
+Juego golf y cuando voy al range apunto mis swings: con qué palo pegué, a qué
+distancia llegó la bola y a qué velocidad salió. La idea del proyecto es tener un
+programa donde guardar esos swings y poder consultarlos, por ejemplo ver cuáles
+fueron los más largos o cuánto le pego en promedio con cada palo.
 
-## Cómo usarlo
-
-Compilar:
-
-```
-g++ -std=c++17 main.cpp -o golf
-```
-
-Ejecutar (el archivo `tiros.csv` tiene que estar en la misma carpeta):
+Por ahora los datos están en `swings.csv`, que funciona como la base de datos del
+programa. Cada renglón es un swing:
 
 ```
+palo,distancia,velocidad
+Driver,238,148
+```
+
+## Avance 1
+
+En este avance el programa:
+
+- Lee los 20 swings de `swings.csv`.
+- Los muestra en pantalla.
+- Los ordena por distancia, de mayor a menor, usando bubble sort.
+
+### Cómo correrlo
+
+```
+g++ main.cpp -o golf
 ./golf
 ```
 
-El menú tiene estas opciones:
-
-1. Ver tiros
-2. Ordenar por distancia (mayor a menor)
-3. Ordenar por palo
-0. Salir
+El archivo `swings.csv` tiene que estar en la misma carpeta.
 
 ## SICT0302: Toma decisiones
 
 ### Selecciona un algoritmo de ordenamiento adecuado al problema
 
-Usé merge sort para ordenar los tiros por distancia y por palo. Lo elegí porque
-siempre es O(n log n) sin importar cómo vengan los datos, y porque es estable:
-cuando dos tiros tienen el mismo palo se quedan en el orden en el que estaban. Eso
-sirve porque si primero ordeno por distancia y luego por palo, los tiros de cada
-palo quedan de mayor a menor distancia.
+Usé bubble sort para ordenar los swings por distancia. Lo elegí porque es fácil
+de implementar y como por ahora solo tengo 20 swings, no se nota que sea más
+lento que otros algoritmos. Le agregué una bandera para que se detenga si en una
+pasada no hizo ningún cambio, así si la lista ya está ordenada termina rápido.
 
-Quicksort también es O(n log n) en promedio, pero no es estable y en el peor caso
-es O(n²), así que no me servía para ordenar primero por distancia y luego por palo.
-
-El ordenamiento está en `ordenamiento.h`: la función `merge` en la línea 18,
-`mergeSort` en la línea 47 y `ordenar` en la línea 57. Se llama desde `main.cpp`
-en las líneas 61 y 64.
+Está en `sorts.h` en la línea 10 y se llama desde `main.cpp` en la línea 57.
 
 ## SICT0301: Evalúa los componentes
 
 ### Análisis de complejidad
 
-**Leer el archivo** (`leerArchivo`): O(n), porque lee una línea por cada tiro.
+Bubble sort:
 
-**Mostrar los tiros** (`mostrar`): O(n), porque imprime cada tiro una vez.
+- Mejor caso: O(n), cuando los swings ya están ordenados. Hace una sola pasada y
+  como no cambia nada, se sale.
+- Caso promedio: O(n²)
+- Peor caso: O(n²), cuando están al revés. Tiene que hacer n pasadas y en cada
+  una compara casi todos los elementos.
 
-**Merge sort** (`mergeSort`):
-- Mejor caso: O(n log n)
-- Caso promedio: O(n log n)
-- Peor caso: O(n log n)
+Leer el archivo y mostrar los swings: O(n), porque pasa una vez por cada swing.
 
-El arreglo se divide a la mitad hasta llegar a un elemento, lo que da log n
-niveles. En cada nivel la función `merge` recorre los n elementos para juntarlos.
-Por eso son n log n pasos en todos los casos.
+## Siguientes avances
 
-En espacio usa O(n), porque `merge` necesita un vector auxiliar para ir juntando
-las dos mitades.
-
-## Próximos avances
-
-- Avance 2: guardar los tiros en una estructura de datos lineal.
-- Avance 3: agregar un árbol y guardar los tiros nuevos en el archivo.
+- Avance 2: guardar los swings en una lista ligada y poder agregar swings nuevos.
+- Avance 3: usar un árbol para buscar swings y guardar los cambios en el archivo.
+- Si llego a tener muchos swings, cambiar bubble sort por merge sort.
