@@ -32,6 +32,11 @@ public:
     void imprimir() {
         cout << palo << "\t" << distancia << " yd\t" << velocidad << " mph" << endl;
     }
+
+    // Regresa el swing como un renglon de swings.csv: palo,distancia,velocidad
+    string aCSV() {
+        return palo + "," + to_string(distancia) + "," + to_string(velocidad);
+    }
 };
 
 #endif

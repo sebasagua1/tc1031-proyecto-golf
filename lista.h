@@ -160,6 +160,14 @@ public:
         cout << endl;
     }
 
+    // Escribe todos los swings en el archivo, uno por renglon y en el orden
+    // en que los pegue, para que al volver a leerlo la lista quede igual.
+    void guardar(ostream &archivo) {
+        for (Nodo *p = head; p != nullptr; p = p->sig) {
+            archivo << p->dato.aCSV() << endl;
+        }
+    }
+
     // Muestra los ultimos k swings, del mas reciente al mas viejo.
     // Empieza en tail y se va hacia atras con ant.
     void mostrarUltimos(int k) {
