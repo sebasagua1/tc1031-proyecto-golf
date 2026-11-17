@@ -261,7 +261,7 @@ como los dejé.
 ### El producto genera valor para un usuario final y se ejecuta sin errores
 
 Me sirve para llevar el registro de mis sesiones en el range y, con la opción 7,
-para saber qué palo usar en la cancha según lo que de verdad me ha salido. Lo
+para saber qué palo usar en el campo según lo que de verdad me ha salido. Lo
 probé agregando y borrando swings y volviendo a abrir el programa, con un
 `swings.csv` con renglones malos, sin el archivo, con entradas que no son
 números y con la lista vacía, y en ningún caso se cerró con error.
